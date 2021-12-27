@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'classes.apps.ClassesConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
