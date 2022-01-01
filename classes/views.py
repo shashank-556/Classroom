@@ -1,18 +1,18 @@
-from django.http import Http404
 from django.shortcuts import get_object_or_404
-from rest_framework import serializers, status
+from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import info,content
 from .serializers import infoSerializer,contentSerializer
 
+not_found = {"detail": "Not found."}
 
 class classinfo(APIView):
     """
     List name, description, creater of a classroom
     """
     # class/<int:pk>
-    
+    permission_classes = [permissions.IsAuthenticated]    
     def get(self,request,pk):
 
         cls = get_object_or_404(info,pk= pk)
@@ -25,9 +25,9 @@ class create_class(APIView):
     Create class
     """
     # class/
-
+    permission_classes = [permissions.IsAuthenticated]
     def post(self,request):
-        # {'name':'','description':''}
+        # {'name':'','description':'',creater_id:''}
         sr = infoSerializer(data = request.data)
         if sr.is_valid():
             sr.save()
@@ -40,13 +40,15 @@ class class_content(APIView):
     """
     # class/<int:pk>/content
 
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self,request,pk):
         if info.objects.filter(pk = pk).exists():
             cnt = content.objects.filter(classid=pk)
             sr = contentSerializer(cnt,many=True)
             return Response(sr.data)
         else :
-            return Response({"detail": "Not found."},status = status.HTTP_404_NOT_FOUND)
+            return Response(not_found,status = status.HTTP_404_NOT_FOUND)
 
 
     def post(self,request,pk):
@@ -60,7 +62,7 @@ class class_content(APIView):
                 return Response(sr.data,status=status.HTTP_201_CREATED)
             return Response(sr.errors,status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({"detail": "Not found."},status = status.HTTP_404_NOT_FOUND)
+            return Response(not_found,status = status.HTTP_404_NOT_FOUND)
 
 
     
