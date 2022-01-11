@@ -12,7 +12,7 @@ class room(models.Model):
     description = models.CharField(max_length=60,null=False,blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # random string of len 6 to 8 for class code
+    # random string of lowercase a-z of len 6 to 8 for class code
     @staticmethod
     def generate_code():
         
@@ -26,6 +26,7 @@ class room(models.Model):
     def __str__(self) -> str:
         return f"creater = {self.creater_id}, {self.name=}"
 
+# to store the messages (and later files) in classroom
 class content(models.Model):
     room = models.ForeignKey(room,on_delete=models.CASCADE)
     msg = models.CharField(max_length=200, null=False)
@@ -36,6 +37,7 @@ class content(models.Model):
     def __str__(self) -> str:
         return self.msg
 
+# join table to keep track of students who join a class
 class member(models.Model):
     student = models.ForeignKey(users,on_delete=models.CASCADE)
     room = models.ForeignKey(room,on_delete=models.CASCADE)

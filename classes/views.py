@@ -39,8 +39,10 @@ class create_class(APIView):
         # {'name':'','description':'',creater_id:''}
         sr = roomSerializer(data = request.data)
         if sr.is_valid():
-            sr.save(code = room.generate_code(),creater=request.user)
-            return Response(sr.data,status=status.HTTP_201_CREATED)
+            cls = sr.save(code = room.generate_code(),creater=request.user)
+            temp = {'code':cls.code}
+            temp.update(sr.data)
+            return Response(temp,status = status.HTTP_202_ACCEPTED)
         return Response(sr.errors,status = status.HTTP_400_BAD_REQUEST)
 
 class class_content(APIView):
