@@ -13,6 +13,11 @@ class contentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class memberSerializer(serializers.ModelSerializer):
+    fullname = serializers.SerializerMethodField('getname')
+
+    def getname(self,mem:member):
+        return mem.student.get_full_name()
+
     class Meta:
         model = member
-        fields = '__all__'
+        fields = ['fullname']

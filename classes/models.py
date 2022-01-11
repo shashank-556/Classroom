@@ -43,10 +43,13 @@ class member(models.Model):
     room = models.ForeignKey(room,on_delete=models.CASCADE)
     date_joined = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ('student','room',)
+
     def __str__(self) -> str:
         return f"user {self.user_id} joined class {self.class_id} on {self.date_joined}"
 
     def is_member(self,user_pk):
-        if self.objects.filter(user_id = user_pk).exists() :
+        if self.objects.filter(student_id = user_pk).exists() :
             return True
         return False
