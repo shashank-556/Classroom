@@ -1,7 +1,6 @@
-from django.db.models import fields
 from rest_framework import serializers
 from .models import room, content
-from accounts.serializers import userSerializer
+from accounts.models import users
 
 class roomSerializer(serializers.ModelSerializer) :
     creater = serializers.SerializerMethodField()
@@ -18,3 +17,9 @@ class contentSerializer(serializers.ModelSerializer):
         model = content
         fields = ('id','msg','created_at')
 
+class memberSerializer(serializers.ModelSerializer) :
+    full_name = serializers.CharField(source='get_full_name')
+
+    class Meta :
+        model = users
+        fields = ('full_name',)

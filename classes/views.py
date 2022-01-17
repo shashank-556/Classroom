@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import room,content
-from .serializers import roomSerializer,contentSerializer
+from .serializers import roomSerializer,contentSerializer,memberSerializer
 
 not_found = {"detail": "not_found."}
 not_authorised = {"detail":"not_authorised"}
@@ -114,13 +114,13 @@ class class_members(APIView):
     Endpoint: /class/<int:pk>/member/
     Methods allowed: (get)
     """
-    # /class/<int:pk>/member/
+    
     permission_classes = [permissions.IsAuthenticated]
     def get(self,request,pk):
         cls = get_object_or_404(room,pk=pk)
+        sr = memberSerializer(cls.student.all(),many=True)
         
-        
-        return Response(data=None)
+        return Response(data=sr.data)
         
 
 
