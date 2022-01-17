@@ -1,10 +1,11 @@
+from calendar import day_abbr
 from django.shortcuts import get_object_or_404
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import room,content
-from .serializers import roomSerializer,contentSerializer,memberSerializer
+from .serializers import roomSerializer,contentSerializer
 
 not_found = {"detail": "not_found."}
 not_authorised = {"detail":"not_authorised"}
@@ -112,20 +113,26 @@ class class_members(APIView):
     """
     Display all the members of a class
     Endpoint: /class/<int:pk>/member/
-    Methods allowed: (get)
+    Methods allowed: (get,delete)
     """
     
     permission_classes = [permissions.IsAuthenticated]
     def get(self,request,pk):
         cls = get_object_or_404(room,pk=pk)
-        sr = memberSerializer(cls.student.all(),many=True)
-        
-        return Response(data=sr.data)
-        
+        di = {'creater':cls.creater.get_full_name,'students':[i.get_full_name for i in cls.student.all()]}
+        return Response(data=di)
+    
+    def delete(self,request,pk):
+        cls = get_object_or_404(room,pk=pk)
+        if request.user in cls.student.all():
+            cls.student.remove(request.user)
+            return Response(data=None,status=status.HTTP_200_OK)
+        else:
+            return Response(data=None,status=status.HTTP_400_BAD_REQUEST)
 
 
 class join_class(APIView):
-    """
+    """ 
     Join a classroom. Response 200(ok) is sent is user is already a part of classroom and 403(forbidden) if user is the creater
     of the classroom. Response 201(created) is sent upon successful joining of a class.
     Method allowed: (post)
@@ -136,7 +143,6 @@ class join_class(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def post(self,request):
-        # {'code':''}
 
         cls = get_object_or_404(room,code=request.data['code'])
 
