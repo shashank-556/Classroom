@@ -11,7 +11,7 @@ not_authorised = {"detail":"not_authorised"}
 not_allowed = {"detail":"not_allowed"}
 not_part_of = {"detail":"not_part_of"}
 
-
+# custom permission class
 class iscreaterorstudent(BasePermission):
     
     message = 'You are not allowed to perform this action'
@@ -146,8 +146,11 @@ class class_members(myAPIView):
     permission_classes = [permissions.IsAuthenticated]
     def get(self,request,pk):
         cls = get_object_or_404(room,pk=pk)
-        di = {'creater':cls.creater.get_full_name,'students':[i.get_full_name for i in cls.student.all()]}
-        return Response(data=di)
+        if request.user == cls.creater or request.user in cls.student.all():
+            di = {'creater':cls.creater.get_full_name,'students':[i.get_full_name for i in cls.student.all()]}
+            return Response(data=di)
+        else :
+            return Response(data=None,status=status.HTTP_403_FORBIDDEN)
     
     def delete(self,request,pk):
         cls = get_object_or_404(room,pk=pk)
