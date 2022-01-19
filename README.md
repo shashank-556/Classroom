@@ -9,7 +9,7 @@ It is advisable to first create a virtual environment for this project. Then pro
 # clone the repo
 $ git clone https://github.com/shashank-556/Classroom.git
 
-# change the working directory to sherlock
+# change the working directory to Classroom
 $ cd Classroom
 
 # install the requirements
