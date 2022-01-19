@@ -1,9 +1,10 @@
 from calendar import day_abbr
+from email import message
 from django.shortcuts import get_object_or_404
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from rest_framework.permissions import BasePermission,SAFE_METHODS
 from .models import room,content
 from .serializers import roomSerializer,contentSerializer
 
@@ -12,17 +13,35 @@ not_authorised = {"detail":"not_authorised"}
 not_allowed = {"detail":"not_allowed"}
 not_part_of = {"detail":"not_part_of"}
 
-class classinfo(APIView):
+
+class iscreaterorstudent(BasePermission):
+    
+    message = 'You are not allowed to perform this action'
+
+    def has_object_permission(self, request,view,obj):
+        if request.method in SAFE_METHODS and (request.user in obj.student.all()):
+            return True
+        
+        return request.user == obj.creater
+
+
+class myAPIView(APIView):
+    def get_object(self,request,pk):
+        obj = get_object_or_404(room,pk=pk)
+        self.check_object_permissions(request,obj)
+        return obj
+
+class classinfo(myAPIView,iscreaterorstudent):
     """
     List name, description, creater of a classroom
     Endpoint: /class/<int:pk>/
     Methods allowed: (get)
     """
-    
-    permission_classes = [permissions.IsAuthenticated]    
+
+    permission_classes = [iscreaterorstudent]    
     def get(self,request,pk):
 
-        cls = get_object_or_404(room,pk= pk)
+        cls = self.get_object(request,pk)
         sr = roomSerializer(cls)
         
         if cls.creater == request.user:
@@ -33,7 +52,7 @@ class classinfo(APIView):
         return Response(sr.data,status = status.HTTP_200_OK)
 
     
-class create_class(APIView):
+class create_class(myAPIView):
     """
     Create class
     Endpoint: /class/
@@ -52,7 +71,7 @@ class create_class(APIView):
             return Response(temp,status = status.HTTP_201_CREATED)
         return Response(sr.errors,status = status.HTTP_400_BAD_REQUEST)
 
-class class_content(APIView):
+class class_content(myAPIView,iscreaterorstudent):
     """
     Create and display content of a class
     Endpoint: /class/<int:pk>/content/
@@ -60,33 +79,33 @@ class class_content(APIView):
     Form Fields(post): {'msg':''}
     """
 
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [iscreaterorstudent]
 
     def get(self,request,pk):
-        cls = get_object_or_404(room,pk=pk)
+        cls = self.get_object(request,pk)
         return Response(data=contentSerializer(cls.contents.all(),many=True).data)
 
 
     def post(self,request,pk):
         
-        cls = get_object_or_404(room,pk=pk)
+        cls = self.get_object(request,pk)
         sr = contentSerializer(data = request.data)
         if sr.is_valid():
             sr.save(room=cls)
             return Response(sr.data,status=status.HTTP_201_CREATED)
         return Response(sr.errors,status.HTTP_400_BAD_REQUEST)
 
-class content_ud(APIView):
+class content_ud(myAPIView,iscreaterorstudent):
     """
     Update or delete class content
     Endpoint: /class/<int:pk>/content/<int:pk>/
     Methods allowed: (put,delete)
     Form Fields(patch): {'msg':''}
     """
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [iscreaterorstudent]
     
     def put(self,request,pk,pkc):
-        cls = get_object_or_404(room,pk=pk)
+        cls = self.get_object(request,pk)
         cnt = get_object_or_404(content,pk=pkc)
         if cnt in cls.contents.all():
             sr = contentSerializer(cnt,data=request.data)
@@ -99,7 +118,7 @@ class content_ud(APIView):
             return Response(data=not_part_of,status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self,request,pk,pkc):
-        cls = get_object_or_404(room,pk=pk)
+        cls = self.get_object(request,pk)
         cnt = get_object_or_404(content,pk=pkc)
         if cnt in cls.contents.all():
             cnt.delete()
@@ -109,7 +128,7 @@ class content_ud(APIView):
 
 
 
-class class_members(APIView):
+class class_members(myAPIView):
     """
     Display all the members of a class
     Endpoint: /class/<int:pk>/member/
@@ -131,7 +150,7 @@ class class_members(APIView):
             return Response(data=None,status=status.HTTP_400_BAD_REQUEST)
 
 
-class join_class(APIView):
+class join_class(myAPIView):
     """ 
     Join a classroom. Response 200(ok) is sent is user is already a part of classroom and 403(forbidden) if user is the creater
     of the classroom. Response 201(created) is sent upon successful joining of a class.
