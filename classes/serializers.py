@@ -12,6 +12,13 @@ class roomSerializer(serializers.ModelSerializer) :
         model = room
         fields = ('id','name','description','created_at','creater')
 
+class roomcreaterSerializer(serializers.ModelSerializer) :
+    code = serializers.ReadOnlyField()
+
+    class Meta :
+        model = room
+        fields = ('id','code','name','description','created_at')
+
 class contentSerializer(serializers.ModelSerializer):
     class Meta :
         model = content

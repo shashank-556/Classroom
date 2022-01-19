@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import BasePermission,SAFE_METHODS
 from .models import room,content
-from .serializers import roomSerializer,contentSerializer
+from .serializers import roomSerializer,contentSerializer,roomcreaterSerializer
 
 not_found = {"detail": "not_found."}
 not_authorised = {"detail":"not_authorised"}
@@ -40,33 +40,43 @@ class classinfo(myAPIView,iscreaterorstudent):
     def get(self,request,pk):
 
         cls = self.get_object(request,pk)
-        sr = roomSerializer(cls)
         
         if cls.creater == request.user:
-            temp = {'code':cls.code}
-            temp.update(sr.data)
-            return Response(temp,status = status.HTTP_200_OK)
-
+            serializer = roomcreaterSerializer
+        else :
+            serializer = roomSerializer
+        sr = serializer(cls)
         return Response(sr.data,status = status.HTTP_200_OK)
 
     
 class create_class(myAPIView):
     """
-    Create class
+    Create class and Returns all the classrooms created by a user and classes joined by the user
     Endpoint: /class/
-    Methods Allowed: (post)
+    Methods Allowed: (get,post)
     Form Fields(post): {'name':'','description':''}
+    For get request pass a parameter as q=created for created classes
+    and q=joined for joined classes
     """
     
     permission_classes = [permissions.IsAuthenticated]
+
+    def get(self,request):
+        if request.GET.get('q','') == 'joined':
+            joined_classes = roomSerializer(request.user.rooms.all(),many=True)
+            return Response(data=joined_classes.data)
+        elif request.GET.get('q','') == 'created':
+            created_classes = roomcreaterSerializer(request.user.created_classes.all(),many=True)
+            return Response(data=created_classes.data)
+        else :
+            return Response(data=None,status=status.HTTP_400_BAD_REQUEST)
+
     def post(self,request):
         
-        sr = roomSerializer(data = request.data)
+        sr = roomcreaterSerializer(data = request.data)
         if sr.is_valid():
-            cls = sr.save(code = room.generate_code(),creater=request.user)
-            temp = {'code':cls.code}
-            temp.update(sr.data)
-            return Response(temp,status = status.HTTP_201_CREATED)
+            sr.save(code = room.generate_code(),creater=request.user)
+            return Response(sr.data,status = status.HTTP_201_CREATED)
         return Response(sr.errors,status = status.HTTP_400_BAD_REQUEST)
 
 class class_content(myAPIView,iscreaterorstudent):
