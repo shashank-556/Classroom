@@ -1,5 +1,3 @@
-from calendar import day_abbr
-from email import message
 from django.shortcuts import get_object_or_404
 from rest_framework import status, permissions
 from rest_framework.response import Response
