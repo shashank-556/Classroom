@@ -1,5 +1,6 @@
 # Classroom
-Restful Web API implemented in django for a classroom application similar to Google Classroom <br><br>
+Restful Web API implemented in django for a classroom application similar to Google Classroom <br>
+[Here](http://shashankkkkk.pythonanywhere.com/) is the link of the for the backend api <br>
 The project uses **djangorestframework-simplejwt** for authorization and **MySQL** as its backend database.
 
 ## Installation
@@ -29,4 +30,5 @@ Create a secrets.json file (in the same folder with manage.py) with following ke
 ```
 SECRET_KEY is the django-project secret key which is used in cryptographic signing. You can generate a secret key by creating a dummy or temporary django project (you can find it in settings.py).<br>
 Rest of the keys are related to your database. You can use SQLite by changing the DATABASES object in settings.py. In that case you won't need all the DB_ keys.
+
 
