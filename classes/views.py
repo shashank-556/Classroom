@@ -36,7 +36,7 @@ class classinfo(myAPIView,iscreaterorstudent):
     Methods allowed: (get)
     """
 
-    permission_classes = [iscreaterorstudent]    
+    permission_classes = [permissions.IsAuthenticated&iscreaterorstudent]    
     def get(self,request,pk):
 
         cls = self.get_object(request,pk)
@@ -87,7 +87,7 @@ class class_content(myAPIView,iscreaterorstudent):
     Form Fields(post): {'msg':''}
     """
 
-    permission_classes = [iscreaterorstudent]
+    permission_classes = [permissions.IsAuthenticated&iscreaterorstudent]
 
     def get(self,request,pk):
         cls = self.get_object(request,pk)
@@ -110,7 +110,7 @@ class content_ud(myAPIView,iscreaterorstudent):
     Methods allowed: (put,delete)
     Form Fields(patch): {'msg':''}
     """
-    permission_classes = [iscreaterorstudent]
+    permission_classes = [permissions.IsAuthenticated&iscreaterorstudent]
     
     def put(self,request,pk,pkc):
         cls = self.get_object(request,pk)
