@@ -45,7 +45,7 @@ Users can register with a unique email address<br>
 ## Obtaining Tokens
 Obtain jwt Access and Refresh tokens for registered users. Refresh token is valid for 30 days and access token is valid for 5 days.<br>
 **Endpoint** `login/`<br>
-**Methods Required** `POST`<br>
+**HTTP METHOD** `POST`<br>
 **Form Fields for POST**
 * {"email","password"}
 
@@ -56,7 +56,7 @@ Provide correct combination of email and password to obtain the tokens
 ## Token Refresh
 Obtain another valid access token by using the refresh token<br>
 **Endpoint** `login/refresh/`<br>
-**Methods Required** `POST`<br>
+**HTTP METHOD** `POST`<br>
 **Form Fields for POST**
 * {"refresh"}<br><br>
 **Fields Description**
@@ -68,7 +68,7 @@ Obtain another valid access token by using the refresh token<br>
 *Requires Authentication*<br>
 You can create a class by providing name and description of a class.<br>
 **Endpoint** `class/`<br>
-**Methods Required** `POST`<br>
+**HTTP METHOD** `POST`<br>
 **Form Fields for POST**
 * {"name","description"}<br><br>
 **Fields Description**
