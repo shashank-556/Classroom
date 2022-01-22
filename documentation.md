@@ -78,7 +78,7 @@ You can create a class by providing name and description of a class.<br>
 
 ## Joining/Enrolling in a class
 *Requires Authentication*<br>
-**Endpoint** `classs/join/`<br>
+**Endpoint** `class/join/`<br>
 **Methods Required** `POST`<br>
 **Form Fields for POST**
 * {"code"}<br><br>
