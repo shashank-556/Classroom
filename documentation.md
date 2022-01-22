@@ -78,6 +78,7 @@ You can create a class by providing name and description of a class.<br>
 **Response**
 
 ## View all the created and joined classes
+*Requires Authentication*<br>
 Users can view all their created class and joined classes.<br>
 **Endpoint** `class/`<br>
 **HTTP METHOD** `GET`<br>
@@ -101,6 +102,7 @@ Users can view all their created class and joined classes.<br>
 **Response**
 
 ## Unenroll/Leave a class
+*Requires Authentication*<br>
 Member of a class can send a delete request at the url of the classroom<br>
 **Endpoint** `class/<integer:classid>/member/`<br>
 **HTTP METHOD** `DELETE`<br>
