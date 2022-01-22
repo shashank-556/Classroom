@@ -27,53 +27,63 @@ The API endpoints for following **do not** require users to be authenticated i.e
 * [API Endpoints]()
 
 ## User Registration
-Users can register with a unique email address
-### Endpoint
-* `register/`
-### Methods Required
-* POST 
-### Form Fields for POST
-* {"first_name","last_name","email","password"}*
-#### Fields Description
+Users can register with a unique email address<br>
+**Endpoint** `register/`<br>
+**HTTP METHOD** `POST`<br>
+**Form Fields for POST**
+* {"first_name","last_name","email","password"}<br><br>
+**Fields Description**
 * first_name : First name of the user , Max-Length = 40 characters
 * last_namee : Last name of the user, Max-Length = 40 characters
 * email : A valid , unique email address.
 * password : Rember your password as it will be used in token generation
-### Response
+
+**Response**
 
 
 ## Obtaining Tokens
-Obtain jwt Access and Refresh tokens for registered users. Refresh token is valid for 30 days and access token is valid for 5 days..
-### Endpoint
-* `login/`
-### Methods Required
-* POST
-### Form Fields for POST
+Obtain jwt Access and Refresh tokens for registered users. Refresh token is valid for 30 days and access token is valid for 5 days.<br>
+**Endpoint** `login/`<br>
+**Methods Required** `POST`<br>
+**Form Fields for POST**
 * {"email","password"}
+
 Provide correct combination of email and password to obtain the tokens
-### Response
+
+**Response**
 
 ## Token Refresh
-Obtain another valid access token by using the refresh token
-### Endpoint
-* `login/refresh/`
-### Methods Required
-* POST
-### Form Fields for POST
-* {"refresh"}
-#### Fields Description
+Obtain another valid access token by using the refresh token<br>
+**Endpoint** `login/refresh/`<br>
+**Methods Required** `POST`<br>
+**Form Fields for POST**
+* {"refresh"}<br><br>
+**Fields Description**
 * refresh : A valid unexpired refresh token
-### Response
+
+**Response**
 
 ## Creating a class
 *Requires Authentication*<br>
-You can create a class by providing name and description of a class.
-### Endpoint
-* `class/`
-### Methods Required
-* POST
-### Form Fields for POST
-* {"refresh"}
-#### Fields Description
-* refresh : A valid unexpired refresh token
-### Response
+You can create a class by providing name and description of a class.<br>
+**Endpoint** `class/`<br>
+**Methods Required** `POST`<br>
+**Form Fields for POST**
+* {"name","description"}<br><br>
+**Fields Description**
+* name : Name of your classroom, Max-Length = 30 characters
+* description : Description of a classroom, Max-Length = 60 characters
+
+**Response**
+
+## Joining/Enrolling in a class
+*Requires Authentication*<br>
+**Endpoint** `classs/join/`<br>
+**Methods Required** `POST`<br>
+**Form Fields for POST**
+* {"code"}<br><br>
+**Fields Description**
+* code : A class code which is a 6-8 character random string of lowercase ascii characters.
+
+**Response**
+
