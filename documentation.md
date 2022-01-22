@@ -19,9 +19,9 @@ The API endpoints for following **do not** require users to be authenticated i.e
 * [Token Refresh]()
 * [Creating class]()
 * [View created and joined classes]()
+* [Basic info of a class]()
 * [Enroll in a class]()
 * [Uenroll from a class]()
-* [Basic info of a class]()
 * [Contents of a class]()
 * [Members of a class]()
 
@@ -90,10 +90,18 @@ Users can view all their created class and joined classes.<br>
 
 **Response**
 
+## View Basic info of a class
+*Requires Authentication and Class Membership*<br>
+Request basic info like name,description,creater_name of a class<br>
+**Endpoint** `class/<integer:classid>/`<br>
+**HTTP METHOD** `GET`<br>
+
+**Response**
+
 ## Joining/Enrolling in a class
 *Requires Authentication*<br>
 **Endpoint** `class/join/`<br>
-**Methods Required** `POST`<br>
+**HTTP METHOD** `POST`<br>
 **Form Fields for POST**
 * {"code"}<br><br>
 **Fields Description**
@@ -102,12 +110,13 @@ Users can view all their created class and joined classes.<br>
 **Response**
 
 ## Unenroll/Leave a class
-*Requires Authentication*<br>
+*Requires Authentication and Class Membership*<br>
 Member of a class can send a delete request at the url of the classroom<br>
 **Endpoint** `class/<integer:classid>/member/`<br>
 **HTTP METHOD** `DELETE`<br>
 
 **Response**
 * `200` Upon  succesfully unenrolling from a class
+
 
 
