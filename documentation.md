@@ -18,6 +18,7 @@ The API endpoints for following **do not** require users to be authenticated i.e
 * [Obtain Token]()
 * [Token Refresh]()
 * [Creating class]()
+* [View created and joined classes]()
 * [Enroll in a class]()
 * [Uenroll from a class]()
 * [Basic info of a class]()
@@ -76,6 +77,18 @@ You can create a class by providing name and description of a class.<br>
 
 **Response**
 
+## View all the created and joined classes
+Users can view all their created class and joined classes.<br>
+**Endpoint** `class/`<br>
+**HTTP METHOD** `GET`<br>
+**Query for GET**
+* {q=created,q=joined}<br><br>
+**Query Description**
+* q=created : Returns a list of json objects of all the classes crated by the user
+* q=joined : Returns a list of json objects of all the classes joined by the user
+
+**Response**
+
 ## Joining/Enrolling in a class
 *Requires Authentication*<br>
 **Endpoint** `class/join/`<br>
@@ -83,7 +96,16 @@ You can create a class by providing name and description of a class.<br>
 **Form Fields for POST**
 * {"code"}<br><br>
 **Fields Description**
-* code : A class code which is a 6-8 character random string of lowercase ascii characters.
+* code : A class code which is a 6-8 character random string of lowercase ascii characters, unique for particular classroom .
 
 **Response**
+
+## Unenroll/Leave a class
+Member of a class can send a delete request at the url of the classroom<br>
+**Endpoint** `class/<integer:classid>/member/`<br>
+**HTTP METHOD** `DELETE`<br>
+
+**Response**
+* `200` Upon  succesfully unenrolling from a class
+
 
