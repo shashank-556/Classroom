@@ -14,8 +14,8 @@ The API endpoints for following **do not** require users to be authenticated i.e
 
 ## Functionalities
 
-* [User Registration]()
-* [Obtain Token]()
+* [User Registration](#reg)
+* [Obtain Token](##obtain-token)
 * [Token Refresh]()
 * [Creating class]()
 * [View created and joined classes]()
@@ -27,7 +27,10 @@ The API endpoints for following **do not** require users to be authenticated i.e
 
 * [API Endpoints]()
 
+
+
 ## User Registration
+
 Users can register with a unique email address<br>
 **Endpoint** `register/`<br>
 **HTTP METHOD** `POST`<br>
@@ -97,6 +100,8 @@ Request basic info like name,description,creater_name of a class<br>
 **HTTP METHOD** `GET`<br>
 
 **Response**
+
+<a name="reg"></a>
 
 ## Joining/Enrolling in a class
 *Requires Authentication*<br>
