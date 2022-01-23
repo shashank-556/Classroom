@@ -13,6 +13,8 @@ The API endpoints for following **do not** require users to be authenticated i.e
 * Obtain Token
 * Token Refresh
 
+If you try to access rest of the views without a valid access token with Authorization header then you will get a `401` Unathorized error.
+
 ## Functionalities
 
 * [User Registration](#reg)
@@ -178,14 +180,37 @@ Users can view all their created class and joined classes.<br>
 If the user has no created or joined classes then the response will be an empty list or array i.e. []
 
 ## View Basic info of a class
-*Requires Authentication and Class Membership*<br>
+*Requires Authentication and Classroom Membership*<br>
 Request basic info like name,description,creater_name of a class<br>
 **Endpoint** `class/<integer:classid>/`<br>
 **HTTP METHOD** `GET`<br>
 
 **Response**
+* `200` : upon sccessful retrieval of class information.
+* `403` : When the user is neither the owner nor the member of a class
+* `404` : When url is incorrect or provided int is not a PK of any class.
 
-<a name="reg"></a>
+**Example for class with id=2 when it is requested by the owner**
+```json
+{
+    "id": 2,
+    "code": "kwargrq",
+    "name": "CD",
+    "description": "Compiler design is a cool class",
+    "created_at": "2022-01-11T15:27:45.774607+05:30"
+}
+```
+
+**Example for class with id=2 when it is requested by the members or students of a class**
+```json
+{
+    "id": 2,
+    "name": "CD",
+    "description": "Compiler design is a cool class",
+    "created_at": "2022-01-11T15:27:45.774607+05:30",
+    "creater": "someone2 noone2"
+}
+```
 
 ## Joining/Enrolling in a class
 *Requires Authentication*<br>
@@ -197,6 +222,24 @@ Request basic info like name,description,creater_name of a class<br>
 * code : A class code which is a 6-8 character random string of lowercase ascii characters, unique for particular classroom .
 
 **Response**
+* `201` : If the user joins successfully
+* `200` : if the user is already a member of the class
+* `403` : Forbidden if the creater of a class tries to join its own class.
+* `400` : On bad request
+* `404` : If code is invalid or url is wrong
+
+When a user joins a class the response is same if a member of student of a class requested the basic info of the class
+
+**Example response for 201 or 200 when a user joins a class with a valid code or is already a member**
+```json
+{
+    "id": 4,
+    "name": "ML",
+    "description": "Machine Learning",
+    "created_at": "2022-01-11T15:29:12.949036+05:30",
+    "creater": "someone4 noone4"
+}
+```
 
 ## Unenroll/Leave a class
 *Requires Authentication and Class Membership*<br>
