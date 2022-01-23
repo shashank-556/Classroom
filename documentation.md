@@ -2,6 +2,7 @@
 Classroom is a platform to create and join digital classrooms.<br>
 The API is based on REST returns JSON-encoded responses, and returns standard HTTP response codes.
 * The base url for the API is: `shashankkkkk.pythonanywhere.com/`
+<hr>
 
 ## Authorization
 The project uses **[JWT](https://jwt.io/)** for authorization and authentication. You can obtain the tokens with a registered email and password from Obtain Token endpoint. <br>
@@ -14,6 +15,7 @@ The API endpoints for following **do not** require users to be authenticated i.e
 * Token Refresh
 
 If you try to access rest of the views without a valid access token with Authorization header then you will get a `401` Unathorized error.
+<hr>
 
 ## Functionalities
 
@@ -29,8 +31,7 @@ If you try to access rest of the views without a valid access token with Authori
 * [Contents of a class](#contents-of-a-class)
 
 * [API Endpoints](#all-api-endpoints-and-their-allowed-methods)
-
-
+<hr>
 
 ## User Registration
 
@@ -59,6 +60,7 @@ Users can register with a unique email address<br>
     "created_at": "2022-01-23T16:01:11.192997+05:30"
 }
 ```
+<hr>
 
 ## Obtaining Tokens
 Obtain jwt Access and Refresh tokens for registered users. Refresh token is valid for 30 days and access token is valid for 5 days.<br>
@@ -81,6 +83,7 @@ Provide correct combination of email and password to obtain the tokens
     "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzMzY1OTM1LCJpYXQiOjE2NDI5MzM5MzUsImp0aSI6IjJmMmE2MThkN2UwNjQwM2RiMmNjOGU0MjYxNjJmNjA1IiwidXNlcl9pZCI6OCwidXNlcl9uYW1lIjoic2hhc2hhbmsgdHJpcGF0aGkifQ.foQe6Dm4R1LUcc2LIrqDsfwZ8JZqy9lxeFRqYDlgbFQ"
 }
 ```
+<hr>
 
 ## Token Refresh
 Obtain another valid access token by using the refresh token<br>
@@ -101,6 +104,7 @@ Obtain another valid access token by using the refresh token<br>
     "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzMzY2MDQ4LCJpYXQiOjE2NDI5MzM5MzUsImp0aSI6IjI1NzAwNWNhMGY5MjQ0NWQ4YTE3OTdjMzcxNTBhZjM3IiwidXNlcl9pZCI6OCwidXNlcl9uYW1lIjoic2hhc2hhbmsgdHJpcGF0aGkifQ.lN8bnTbcIe4RaDwcI6AdVwNL6-fKUn3dACJClUMSaG8"
 }
 ```
+<hr>
 
 ## Creating a class
 *Requires Authentication*<br>
@@ -127,6 +131,7 @@ You can create a class by providing name and description of a class.<br>
     "created_at": "2022-01-23T15:11:55.799756+05:30"
 }
 ```
+<hr>
 
 ## View all the created and joined classes
 *Requires Authentication*<br>
@@ -178,6 +183,7 @@ Users can view all their created class and joined classes.<br>
 ]
 ```
 If the user has no created or joined classes then the response will be an empty list or array i.e. []
+<hr>
 
 ## View Basic info of a class
 *Requires Authentication and Classroom Membership*<br>
@@ -212,6 +218,7 @@ Request basic info like name,description,creater_name of a class<br>
     "creater": "someone2 noone2"
 }
 ```
+<hr>
 
 ## Joining/Enrolling in a class
 *Requires Authentication*<br>
@@ -241,6 +248,7 @@ When a user joins a class the response is same if a member of student of a class
     "creater": "someone4 noone4"
 }
 ```
+<hr>
 
 ## View Classroom Members or Students
 *Requires Authentication and Classroom Membership*<br>
@@ -264,6 +272,7 @@ See all the members of class<br>
     ]
 }
 ```
+<hr>
 
 ## Unenroll/Leave a class
 *Requires Authentication and Class Membership*<br>
@@ -276,6 +285,7 @@ Member of a class can send a delete request at the url of the classroom<br>
 * `404` : If classid is invalid 
 
 *No data is returned upon successful unenrollment*
+<hr>
 
 ## Contents of a class
 *Requires Authentication and Class Membership*<br>
