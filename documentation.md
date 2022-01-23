@@ -17,16 +17,16 @@ If you try to access rest of the views without a valid access token with Authori
 
 ## Functionalities
 
-* [User Registration](#reg)
-* [Obtain Token](##obtain-token)
+* [User Registration]()
+* [Obtain Token]()
 * [Token Refresh]()
 * [Creating class]()
 * [View created and joined classes]()
 * [Basic info of a class]()
 * [Enroll in a class]()
+* [Members of a class]()
 * [Uenroll from a class]()
 * [Contents of a class]()
-* [Members of a class]()
 
 * [API Endpoints]()
 
@@ -190,7 +190,8 @@ Request basic info like name,description,creater_name of a class<br>
 * `403` : When the user is neither the owner nor the member of a class
 * `404` : When url is incorrect or provided int is not a PK of any class.
 
-**Example for class with id=2 when it is requested by the owner**
+
+**Example for class with id=2 when it is requested by the owner** url : `base_url/class/2/`
 ```json
 {
     "id": 2,
@@ -201,7 +202,7 @@ Request basic info like name,description,creater_name of a class<br>
 }
 ```
 
-**Example for class with id=2 when it is requested by the members or students of a class**
+**Example for class with id=2 when it is requested by the members or students of a class** url : `base_url/class/2/`
 ```json
 {
     "id": 2,
@@ -241,6 +242,29 @@ When a user joins a class the response is same if a member of student of a class
 }
 ```
 
+## View Classroom Members or Students
+*Requires Authentication and Classroom Membership*<br>
+See all the members of class<br>
+**Endpoint** `class/<integer:classid>/member/`<br>
+**HTTP METHOD** `GET`<br>
+
+**Response**
+* `200` : upon sccessful retrieval of class members.
+* `403` : When the user is neither the owner nor the member of a class
+* `404` : When url is incorrect or provided int is not a PK of any class.
+
+**Example for class with id=2 when it is requested by the owner or a member** url : `base_url/class/2/member/`
+```json
+{
+
+    "creater": "someone2 noone2",
+    "students": [
+        "someone3 noone3",
+        "someone4 noone4"
+    ]
+}
+```
+
 ## Unenroll/Leave a class
 *Requires Authentication and Class Membership*<br>
 Member of a class can send a delete request at the url of the classroom<br>
@@ -248,7 +272,106 @@ Member of a class can send a delete request at the url of the classroom<br>
 **HTTP METHOD** `DELETE`<br>
 
 **Response**
-* `200` Upon  succesfully unenrolling from a class
+* `200` : Upon  succesfully unenrolling from a class
+* `404` : If classid is invalid 
 
+*No data is returned upon successful unenrollment*
 
+## Contents of a class
+*Requires Authentication and Class Membership*<br>
+Note that all the contents returned are sorted in descending order of their creation time i.e. most recently created content is at the top. 
 
+### View all content of the class
+*Both Owner and member can perform this*<br>
+**Endpoint** `class/<integer:classid>/content/`<br>
+**HTTP METHOD** `GET`<br>
+
+**Response**
+* `200` : upon sccessful retrieval of class contents.
+* `403` : When the user is neither the owner nor the member of a class
+* `404` : When url is incorrect or provided int is not a PK of any class.
+
+**Example response for** `base_url/class/2/content/`
+```json
+[
+    {
+        "id": 7,
+        "msg": "This is your lecutere number 4.",
+        "created_at": "2022-01-19T16:57:24.019598+05:30"
+    },
+    {
+        "id": 3,
+        "msg": "This is your lecutere number 3",
+        "created_at": "2022-01-16T21:18:43.705590+05:30"
+    },
+    {
+        "id": 2,
+        "msg": "This is your lecutere number 2.",
+        "created_at": "2022-01-15T23:45:59.763466+05:30"
+    },
+    {
+        "id": 1,
+        "msg": "Your first lecute is scheduled to on this link: www.somestupidvideostreamingapp.com/sdlfds/",
+        "created_at": "2022-01-15T23:45:20.227275+05:30"
+    }
+]
+```
+Empty list [] is returned if no content is present.
+
+### Create content of a class
+*Only Owner or creater of classroom can perform this*<br>
+**Endpoint** `class/<integer:classid>/content/`<br>
+**HTTP METHOD** `POST`<br>
+**Form Fields for POST**
+* {"msg"}<br><br>
+**Fields Description**
+* msg : First name of the user , Max-Length = 200 characters
+
+**Response**
+* `201` : upon sccessful creation of class content.
+* `403` : When the user is neither the owner nor the member of a class
+* `404` : When url is incorrect or provided int is not a PK of any class.
+
+**Example response for 201**
+```json
+{
+    "id": 10,
+    "msg": "This is your lecture number 4",
+    "created_at": "2022-01-23T18:52:20.657353+05:30"
+}
+```
+
+### Update content of a class
+*Only Owner or creater of classroom can perform this*<br>
+**Endpoint** `class/<integer:classid>/content/<integer:contentid>/`<br>
+**HTTP METHOD** `PUT`<br>
+**Form Fields for PUT**
+* {"msg"}<br><br>
+**Fields Description**
+* msg : First name of the user , Max-Length = 200 characters
+
+**Response**
+* `200` : upon sccessful updation of class content.
+* `403` : When the user is neither the owner nor the member of a class
+* `404` : When url is incorrect or provided int is not a PK of any class or invalid contentid.
+
+**Example response for 200**
+```json
+{
+    "id": 10,
+    "msg": "This is your lecture number 5",
+    "created_at": "2022-01-23T18:52:20.657353+05:30"
+}
+```
+
+### Delete content of a class
+*Only Owner or creater of classroom can perform this*<br>
+**Endpoint** `class/<integer:classid>/content/<integer:contentid>/`<br>
+**HTTP METHOD** `DELETE`<br>
+
+**Response**
+* `200` : upon sccessful deletion of class content with given contentid.
+* `403` : When the user is neither the owner nor the member of a class
+* `404` : When url is incorrect or provided int is not a PK of any class or invalid contentid.
+
+*No data is sent on deletion*
