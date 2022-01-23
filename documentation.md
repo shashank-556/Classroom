@@ -137,7 +137,45 @@ Users can view all their created class and joined classes.<br>
 * q=created : Returns a list of json objects of all the classes crated by the user
 * q=joined : Returns a list of json objects of all the classes joined by the user
 
-**Response**
+**Example response for url `shashankkkkk.pythonanywhere.com/class?q=created` for some user**
+```json
+[
+    {
+        "id": 10,
+        "code": "mohhtn",
+        "name": "Operating system",
+        "description": "test2",
+        "created_at": "2022-01-23T14:48:09.909769+05:30"
+    },
+    {
+        "id": 11,
+        "code": "irqfaoj",
+        "name": "Operating system",
+        "description": "This class is for IT 3rd semester students.",
+        "created_at": "2022-01-23T15:11:55.799756+05:30"
+    }
+]
+```
+**Example response for url `shashankkkkk.pythonanywhere.com/class?q=joined` for some user**
+```json
+[
+    {
+        "id": 1,
+        "name": "OS",
+        "description": "Operating systems are cool",
+        "created_at": "2022-01-10T21:12:15.679056+05:30",
+        "creater": "someone4 noone4"
+    },
+    {
+        "id": 2,
+        "name": "CD",
+        "description": "Compiler design is a cool class",
+        "created_at": "2022-01-11T15:27:45.774607+05:30",
+        "creater": "someone2 noone2"
+    }
+]
+```
+If the user has no created or joined classes then the response will be an empty list or array i.e. []
 
 ## View Basic info of a class
 *Requires Authentication and Class Membership*<br>
