@@ -17,18 +17,18 @@ If you try to access rest of the views without a valid access token with Authori
 
 ## Functionalities
 
-* [User Registration]()
-* [Obtain Token]()
-* [Token Refresh]()
-* [Creating class]()
-* [View created and joined classes]()
-* [Basic info of a class]()
-* [Enroll in a class]()
-* [Members of a class]()
-* [Uenroll from a class]()
-* [Contents of a class]()
+* [User Registration](#user-registration)
+* [Obtain Token](#obtaining-tokens)
+* [Token Refresh](#token-refresh)
+* [Creating class](#creating-a-class)
+* [View created and joined classes](#view-all-the-created-and-joined-classes)
+* [Basic info of a class](#view-basic-info-of-a-class)
+* [Enroll in a class](#joiningenrolling-in-a-class)
+* [Members of a class](#view-classroom-members-or-students)
+* [Uenroll from a class](#unenrollleave-a-class)
+* [Contents of a class](#contents-of-a-class)
 
-* [API Endpoints]()
+* [API Endpoints](#all-api-endpoints-and-their-allowed-methods)
 
 
 
@@ -375,3 +375,17 @@ Empty list [] is returned if no content is present.
 * `404` : When url is incorrect or provided int is not a PK of any class or invalid contentid.
 
 *No data is sent on deletion*
+
+
+## All API endpoints and their allowed methods
+
+* (POST) `shashankkkkk.pythonanywhere.com/register/`           
+* (POST) `shashankkkkk.pythonanywhere.com/login/`
+* (POST) `shashankkkkk.pythonanywhere.com/login/refresh/`
+* (GET,POST) `shashankkkkk.pythonanywhere.com/class/`
+* (GET) `shashankkkkk.pythonanywhere.com/class/<int:classid>/`
+* (GET,POST) `shashankkkkk.pythonanywhere.com/class/<int:classid>/content/`
+* (DELETE,PUT) `shashankkkkk.pythonanywhere.com/class/<int:classid>/content/<int:contentid>/`
+* (GET,DELETE) `shashankkkkk.pythonanywhere.com/class/<int:classid>/member/`
+* (POST) `shashankkkkk.pythonanywhere.com/class/join/`
+
