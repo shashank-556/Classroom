@@ -282,7 +282,7 @@ Member of a class can send a delete request at the url of the classroom<br>
 Note that all the contents returned are sorted in descending order of their creation time i.e. most recently created content is at the top. 
 
 ### View all content of the class
-*Both Owner and member can perform this*<br>
+*Both Owner and member can perform this action*<br>
 **Endpoint** `class/<integer:classid>/content/`<br>
 **HTTP METHOD** `GET`<br>
 
@@ -319,7 +319,7 @@ Note that all the contents returned are sorted in descending order of their crea
 Empty list [] is returned if no content is present.
 
 ### Create content of a class
-*Only Owner or creater of classroom can perform this*<br>
+*Only Owner or creater of classroom can perform this action*<br>
 **Endpoint** `class/<integer:classid>/content/`<br>
 **HTTP METHOD** `POST`<br>
 **Form Fields for POST**
@@ -342,7 +342,7 @@ Empty list [] is returned if no content is present.
 ```
 
 ### Update content of a class
-*Only Owner or creater of classroom can perform this*<br>
+*Only Owner or creater of classroom can perform this action*<br>
 **Endpoint** `class/<integer:classid>/content/<integer:contentid>/`<br>
 **HTTP METHOD** `PUT`<br>
 **Form Fields for PUT**
@@ -365,7 +365,7 @@ Empty list [] is returned if no content is present.
 ```
 
 ### Delete content of a class
-*Only Owner or creater of classroom can perform this*<br>
+*Only Owner or creater of classroom can perform this action*<br>
 **Endpoint** `class/<integer:classid>/content/<integer:contentid>/`<br>
 **HTTP METHOD** `DELETE`<br>
 
