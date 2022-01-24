@@ -8,4 +8,5 @@ urlpatterns = [
     path('<int:pk>/member/',views.class_members.as_view()),
     path('join/',views.join_class.as_view()),
     path('<int:pk>/content/<int:pkc>/',views.content_ud.as_view()),
+    path('<int:pk>/all/',views.all_info.as_view()),
 ]

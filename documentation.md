@@ -29,6 +29,7 @@ If you try to access rest of the views without a valid access token with Authori
 * [Members of a class](#view-classroom-members-or-students)
 * [Uenroll from a class](#unenrollleave-a-class)
 * [Contents of a class](#contents-of-a-class)
+* [All relevant info of a class](#all-relevant-info-of-a-class)
 
 * [API Endpoints](#all-api-endpoints-and-their-allowed-methods)
 <hr>
@@ -386,6 +387,105 @@ Empty list [] is returned if no content is present.
 
 *No data is sent on deletion*
 
+## All relevant info of a class
+*Requires Authentication and Classroom Membership*<br>
+Request basic all info of the name,description,creater_name,contents,students of a class<br>
+**Endpoint** `class/<integer:classid>/all/`<br>
+**HTTP METHOD** `GET`<br>
+
+**Response**
+* `200` : upon sccessful retrieval of class information.
+* `403` : When the user is neither the owner nor the member of a class
+* `404` : When url is incorrect or provided int is not a PK of any class.
+
+**Example response when requested by creater**
+```json
+{
+    "member": {
+        "creater": "someone2 noone2",
+        "students": [
+            "someone4 noone4"
+        ]
+    },
+    "content": [
+        {
+            "id": 8,
+            "msg": "This is your lecture number 4",
+            "created_at": "2022-01-23T18:50:30.201646+05:30"
+        },
+        {
+            "id": 7,
+            "msg": "This is your lecutere number 4.",
+            "created_at": "2022-01-19T16:57:24.019598+05:30"
+        },
+        {
+            "id": 3,
+            "msg": "This is your lecutere number 3",
+            "created_at": "2022-01-16T21:18:43.705590+05:30"
+        },
+        {
+            "id": 2,
+            "msg": "This is your lecutere number 2.",
+            "created_at": "2022-01-15T23:45:59.763466+05:30"
+        },
+        {
+            "id": 1,
+            "msg": "Your first lecute is scheduled to on this link: www.somestupidvideostreamingapp.com/sdlfds/",
+            "created_at": "2022-01-15T23:45:20.227275+05:30"
+        }
+    ],
+    "id": 2,
+    "code": "kwargrq",
+    "name": "CD",
+    "description": "Compiler design is a cool class",
+    "created_at": "2022-01-11T15:27:45.774607+05:30"
+}
+```
+
+**Example response when requested by a member**
+```json
+{
+    "member": {
+        "creater": "someone2 noone2",
+        "students": [
+            "someone4 noone4"
+        ]
+    },
+    "content": [
+        {
+            "id": 8,
+            "msg": "This is your lecture number 4",
+            "created_at": "2022-01-23T18:50:30.201646+05:30"
+        },
+        {
+            "id": 7,
+            "msg": "This is your lecutere number 4.",
+            "created_at": "2022-01-19T16:57:24.019598+05:30"
+        },
+        {
+            "id": 3,
+            "msg": "This is your lecutere number 3",
+            "created_at": "2022-01-16T21:18:43.705590+05:30"
+        },
+        {
+            "id": 2,
+            "msg": "This is your lecutere number 2.",
+            "created_at": "2022-01-15T23:45:59.763466+05:30"
+        },
+        {
+            "id": 1,
+            "msg": "Your first lecute is scheduled to on this link: www.somestupidvideostreamingapp.com/sdlfds/",
+            "created_at": "2022-01-15T23:45:20.227275+05:30"
+        }
+    ],
+    "id": 2,
+    "name": "CD",
+    "description": "Compiler design is a cool class",
+    "created_at": "2022-01-11T15:27:45.774607+05:30",
+    "creater": "someone2 noone2"
+}
+```
+
 
 ## All API endpoints and their allowed methods
 
@@ -398,4 +498,4 @@ Empty list [] is returned if no content is present.
 * (DELETE,PUT) `shashankkkkk.pythonanywhere.com/class/<int:classid>/content/<int:contentid>/`
 * (GET,DELETE) `shashankkkkk.pythonanywhere.com/class/<int:classid>/member/`
 * (POST) `shashankkkkk.pythonanywhere.com/class/join/`
-
+* (GET) `shashankkkkk.pythonanywhere.com/class/<int:classid>/all/`

@@ -29,6 +29,9 @@ class myAPIView(APIView):
         self.check_object_permissions(request,obj)
         return obj
 
+def get_mem_dict(cls) :
+    return {'creater':cls.creater.get_full_name,'students':[i.get_full_name for i in cls.student.all()]}
+
 class classinfo(myAPIView,iscreaterorstudent):
     """
     List name, description, creater of a classroom
@@ -147,7 +150,7 @@ class class_members(myAPIView):
     def get(self,request,pk):
         cls = get_object_or_404(room,pk=pk)
         if request.user == cls.creater or request.user in cls.student.all():
-            di = {'creater':cls.creater.get_full_name,'students':[i.get_full_name for i in cls.student.all()]}
+            di = get_mem_dict(cls)
             return Response(data=di)
         else :
             return Response(data=None,status=status.HTTP_403_FORBIDDEN)
@@ -184,3 +187,25 @@ class join_class(myAPIView):
         
         cls.student.add(request.user)
         return Response(data=roomSerializer(cls).data,status=status.HTTP_201_CREATED)    
+
+class all_info(myAPIView,iscreaterorstudent):
+    """
+    Get all info content,members,name,description of the class
+    Endpoint: /class/<int:pk>/all/
+    Methods allowed: (get)
+    """
+    permission_classes = [permissions.IsAuthenticated&iscreaterorstudent]
+
+    def get(self,request,pk):
+        cls = self.get_object(request,pk)
+        di = {'member':get_mem_dict(cls),'content':contentSerializer(cls.contents.all(),many=True).data}
+        if cls.creater == request.user:
+            serializer = roomcreaterSerializer
+        else :
+            serializer = roomSerializer
+        
+        sr = serializer(cls)
+        di.update(sr.data)
+
+        return Response(data=di)
+
