@@ -25,10 +25,12 @@ Create a secrets.json file (in the same folder with manage.py) with following ke
     "DB_USER": "",
     "DB_NAME": "",
     "DB_HOST": "",
-    "DB_PORT": ""
+    "DB_PORT": "",
+    "MEDIA_ROOT":""
 }
 ```
 SECRET_KEY is the django-project secret key which is used in cryptographic signing. You can generate a secret key by creating a dummy or temporary django project (you can find it in settings.py).<br>
-Rest of the keys are related to your database. You can use SQLite by changing the DATABASES object in settings.py. In that case you won't need all the DB_ keys.
+Rest of the keys are related to your database. You can use SQLite by changing the DATABASES object in settings.py. In that case you won't need all the DB_ keys.<br>
+MEDIA_ROOT is the location of your media folder for storing files.
 
 
