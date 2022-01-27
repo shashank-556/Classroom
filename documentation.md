@@ -306,24 +306,34 @@ Note that all the contents returned are sorted in descending order of their crea
 ```json
 [
     {
-        "id": 7,
-        "msg": "This is your lecutere number 4.",
-        "created_at": "2022-01-19T16:57:24.019598+05:30"
+        "id": 12,
+        "msg": "This is your 3rd lecture doc. Here is it is.",
+        "created_at": "2022-01-27T12:40:20.491097+05:30",
+        "sheet": "/media/doge.jpg"
     },
     {
-        "id": 3,
-        "msg": "This is your lecutere number 3",
-        "created_at": "2022-01-16T21:18:43.705590+05:30"
+        "id": 11,
+        "msg": "This is your 3rd lecture doc. Here is it is.",
+        "created_at": "2022-01-26T18:55:53.815282+05:30",
+        "sheet": null
     },
     {
-        "id": 2,
-        "msg": "This is your lecutere number 2.",
-        "created_at": "2022-01-15T23:45:59.763466+05:30"
+        "id": 9,
+        "msg": "This is your lecture number 4",
+        "created_at": "2022-01-23T18:51:33.621416+05:30",
+        "sheet": null
     },
     {
-        "id": 1,
-        "msg": "Your first lecute is scheduled to on this link: www.somestupidvideostreamingapp.com/sdlfds/",
-        "created_at": "2022-01-15T23:45:20.227275+05:30"
+        "id": 6,
+        "msg": "Hello there morons",
+        "created_at": "2022-01-16T21:21:15.045628+05:30",
+        "sheet": null
+    },
+    {
+        "id": 5,
+        "msg": "Hello my name is Shashank",
+        "created_at": "2022-01-16T21:21:01.197969+05:30",
+        "sheet": null
     }
 ]
 ```
@@ -334,9 +344,10 @@ Empty list [] is returned if no content is present.
 **Endpoint** `class/<integer:classid>/content/`<br>
 **HTTP METHOD** `POST`<br>
 **Form Fields for POST**
-* {"msg"}<br><br>
+* {"msg","sheet"}<br><br>
 **Fields Description**
 * msg : First name of the user , Max-Length = 200 characters
+* sheet : A file field where creaters can upload any types of files.
 
 **Response**
 * `201` : upon sccessful creation of class content.
@@ -346,9 +357,10 @@ Empty list [] is returned if no content is present.
 **Example response for 201**
 ```json
 {
-    "id": 10,
-    "msg": "This is your lecture number 4",
-    "created_at": "2022-01-23T18:52:20.657353+05:30"
+    "id": 15,
+    "msg": "This is your 6th lecture. Here is a doc for reference.",
+    "created_at": "2022-01-27T22:17:06.872828+05:30",
+    "sheet": "/media/keyboard-shortcuts-linux.pdf"
 }
 ```
 
@@ -357,9 +369,10 @@ Empty list [] is returned if no content is present.
 **Endpoint** `class/<integer:classid>/content/<integer:contentid>/`<br>
 **HTTP METHOD** `PUT`<br>
 **Form Fields for PUT**
-* {"msg"}<br><br>
+* {"msg","sheet"}<br><br>
 **Fields Description**
 * msg : First name of the user , Max-Length = 200 characters
+* sheet : A file field where creaters can upload any types of files.
 
 **Response**
 * `200` : upon sccessful updation of class content.
@@ -369,9 +382,10 @@ Empty list [] is returned if no content is present.
 **Example response for 200**
 ```json
 {
-    "id": 10,
-    "msg": "This is your lecture number 5",
-    "created_at": "2022-01-23T18:52:20.657353+05:30"
+    "id": 15,
+    "msg": "This is your 6th lecture. Here is a doc for reference.",
+    "created_at": "2022-01-27T22:17:06.872828+05:30",
+    "sheet": null
 }
 ```
 
@@ -411,27 +425,32 @@ Request basic all info of the name,description,creater_name,contents,students of
         {
             "id": 8,
             "msg": "This is your lecture number 4",
-            "created_at": "2022-01-23T18:50:30.201646+05:30"
+            "created_at": "2022-01-23T18:50:30.201646+05:30",
+            "sheet": null
         },
         {
             "id": 7,
             "msg": "This is your lecutere number 4.",
-            "created_at": "2022-01-19T16:57:24.019598+05:30"
+            "created_at": "2022-01-19T16:57:24.019598+05:30",
+            "sheet": null
         },
         {
             "id": 3,
             "msg": "This is your lecutere number 3",
-            "created_at": "2022-01-16T21:18:43.705590+05:30"
+            "created_at": "2022-01-16T21:18:43.705590+05:30",
+            "sheet": null
         },
         {
             "id": 2,
             "msg": "This is your lecutere number 2.",
-            "created_at": "2022-01-15T23:45:59.763466+05:30"
+            "created_at": "2022-01-15T23:45:59.763466+05:30",
+            "sheet": null
         },
         {
             "id": 1,
             "msg": "Your first lecute is scheduled to on this link: www.somestupidvideostreamingapp.com/sdlfds/",
-            "created_at": "2022-01-15T23:45:20.227275+05:30"
+            "created_at": "2022-01-15T23:45:20.227275+05:30",
+            "sheet": null
         }
     ],
     "id": 2,
@@ -455,27 +474,32 @@ Request basic all info of the name,description,creater_name,contents,students of
         {
             "id": 8,
             "msg": "This is your lecture number 4",
-            "created_at": "2022-01-23T18:50:30.201646+05:30"
+            "created_at": "2022-01-23T18:50:30.201646+05:30",
+            "sheet": null
         },
         {
             "id": 7,
             "msg": "This is your lecutere number 4.",
-            "created_at": "2022-01-19T16:57:24.019598+05:30"
+            "created_at": "2022-01-19T16:57:24.019598+05:30",
+            "sheet": null
         },
         {
             "id": 3,
             "msg": "This is your lecutere number 3",
-            "created_at": "2022-01-16T21:18:43.705590+05:30"
+            "created_at": "2022-01-16T21:18:43.705590+05:30",
+            "sheet": null
         },
         {
             "id": 2,
             "msg": "This is your lecutere number 2.",
-            "created_at": "2022-01-15T23:45:59.763466+05:30"
+            "created_at": "2022-01-15T23:45:59.763466+05:30",
+            "sheet": null
         },
         {
             "id": 1,
             "msg": "Your first lecute is scheduled to on this link: www.somestupidvideostreamingapp.com/sdlfds/",
-            "created_at": "2022-01-15T23:45:20.227275+05:30"
+            "created_at": "2022-01-15T23:45:20.227275+05:30",
+            "sheet": null
         }
     ],
     "id": 2,

@@ -22,6 +22,6 @@ class roomcreaterSerializer(serializers.ModelSerializer) :
 class contentSerializer(serializers.ModelSerializer):
     class Meta :
         model = content
-        fields = ('id','msg','created_at')
+        fields = ('id','msg','created_at','sheet')
 
 

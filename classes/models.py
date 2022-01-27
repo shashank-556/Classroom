@@ -31,6 +31,7 @@ class room(models.Model):
 class content(models.Model):
     room = models.ForeignKey(room,on_delete=models.CASCADE,related_name='contents')
     msg = models.CharField(max_length=200, null=False)
+    sheet = models.FileField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     class Meta:
         ordering = ['-created_at']
