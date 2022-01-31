@@ -1,5 +1,6 @@
 # Classroom
 Restful Web API implemented in django for a classroom application similar to Google Classroom <br>
+[Check](documentation.md) out the documentation of the API.<br>
 [Here](http://shashankkkkk.pythonanywhere.com/) is the link of the for the backend api. <br>
 The project uses **djangorestframework-simplejwt** for authorization and **MySQL** as its backend database.
 
